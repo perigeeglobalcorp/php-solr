@@ -1512,7 +1512,10 @@ PHP_METHOD(SolrClient, optimize)
 	doc_ptr = solr_xml_create_xml_doc((xmlChar *) "optimize", &root_node);
 
 	xmlNewProp(root_node, (xmlChar *) "maxSegments", (xmlChar *) maxSegments);
-	xmlNewProp(root_node, (xmlChar *) "waitFlush", (xmlChar *) waitFlushValue);
+	if (waitFlushValue == 0)
+	{
+		xmlNewProp(root_node, (xmlChar *) "waitFlush", (xmlChar *) waitFlushValue);
+	}
 	xmlNewProp(root_node, (xmlChar *) "waitSearcher", (xmlChar *) waitSearcherValue);
 
 	if (solr_fetch_client_entry(getThis(), &client TSRMLS_CC) == FAILURE)
@@ -1583,7 +1586,10 @@ PHP_METHOD(SolrClient, commit)
 	doc_ptr = solr_xml_create_xml_doc((xmlChar *) "commit", &root_node);
 
 	xmlNewProp(root_node, (xmlChar *) "maxSegments", (xmlChar *) maxSegments);
-	xmlNewProp(root_node, (xmlChar *) "waitFlush", (xmlChar *) waitFlushValue);
+	if (waitFlushValue == 0)
+	{
+		xmlNewProp(root_node, (xmlChar *) "waitFlush", (xmlChar *) waitFlushValue);
+	}
 	xmlNewProp(root_node, (xmlChar *) "waitSearcher", (xmlChar *) waitSearcherValue);
 
 	if (solr_fetch_client_entry(getThis(), &client TSRMLS_CC) == FAILURE)
